@@ -1,0 +1,35 @@
+1. The Problem Statement
+
+"Bridging the Gap Between Pattern Recognition and Financial Decision-Making using Hybrid AI."
+
+Financial markets generate massive amounts of noisy, unlabeled data where significant events (crashes or pumps) are often preceded by "anomalous" behavior in price and volume. Traditional algorithms struggle to act on these because they require human-defined rules.
+
+The Goal: To build a real-time system that uses Unsupervised Learning to detect market irregularities without human labels, and prepares a foundation for a Reinforcement Learning agent to learn optimal trading policies based on these detected states.
+
+
+2. Step-by-Step Workflow (The "What & Why")
+Step 1: Real-Time Data Acquisition
+We use the yfinance API to stream Bitcoin (BTC-USD) data at 1-minute intervals. This provides the "Raw State" of the environment.
+
+Step 2: Unsupervised Feature Engineering (The Radar)
+We feed Price and Volume into an Isolation Forest algorithm.
+
+Why? Because we don't know what a "bad" market looks like mathematically. The model identifies anomalies by isolating observations that are few and different from the rest of the data.
+
+Step 3: Signal Visualization
+We project the model's findings onto a chart. This allows a human (or an RL developer) to verify if the "Red Dots" align with significant market shifts.
+
+Step 4: State Preparation for RL (The Next Step)
+The output of our Unsupervised model (the anomaly_signal and scores) becomes the input for our Reinforcement Learning agent. Instead of the agent just seeing "Price," it now sees "Price + Weirdness Level," giving it a massive advantage in decision-making.
+
+3. Why did we add the Subplot? (Supporting Statement)
+In data science, looking at one variable in isolation is often misleading. We added the Volume Subplot for three critical reasons:
+
+Contextual Validation: An anomaly in Price might be a glitch, but an anomaly in Price + Volume usually indicates a real market event (like a "Whale" trader entering the market).
+
+Multi-Dimensional Insight: The Isolation Forest "sees" in 2D (Price AND Volume). By plotting them separately but aligned on the same time-axis, we can visually confirm why a specific point was flagged.
+
+Solving the "Explainability Gap": Unsupervised Learning is often a "black box." The subplot makes the model’s "invisible" logic visible to the user. If a red dot appears during a massive volume spike, we immediately understand the model's reasoning.
+
+
+
